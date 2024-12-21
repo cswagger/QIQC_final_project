@@ -29,7 +29,7 @@ This describes a graph with six vertices and seven edges. Vertices $0$, $1$, and
 1 4
 3 4 5
 ```
-This indicates that there are three maximal cliques: \([0, 1, 2]\), \([1, 4]\), and \([3, 4, 5]\).
+This indicates that there are three maximal cliques: [0, 1, 2], \[1, 4], and [3, 4, 5].
 
 ### Testcase Directories
 - **custom_testcases**: Contains small test cases for debugging.
