@@ -1,47 +1,51 @@
 #!/bin/bash
 
-TEST_DIR="test"  # Adjust this to your test directory
-PYTHON_SCRIPT="clique_program.py"  # Replace with your Python script name
-REPS_LIST=(5 10 15 20)  # List of reps to test
-MAX_RUNS=5  # Number of times to run each combination of {reps, file}
+TEST_DIR="../testcases/normal_testcases"
+PYTHON_SCRIPT="clique_QUBO.py"
+REPS_LIST=(1 2 4 8 12 16 20 24 28 32)
+TEST_LIST=(0 4 8 12 16 20 24 28 32 36 40)
+MAX_RUNS=3
 
 RESULT_FILE="results.txt" > "$RESULT_FILE"
 
 validate_correctness() {
-    local file=$1
-    local reps=$2
+    local testfile=$1
+    local answerfile=$2
+    local reps=$3
     local pass_count=0
 
     for run in $(seq 1 "$MAX_RUNS"); do
         echo "Running file: $file with reps: $reps (Run $run)"
-        # Run the Python script with the input file and reps
-        python "$PYTHON_SCRIPT" --input "$file" --reps "$reps"
+        python3 "$PYTHON_SCRIPT" "$testfile" "$answerfile" "$reps" 2> /dev/null
         if [ $? -eq 0 ]; then
             pass_count=$((pass_count + 1))
+        else
+            break
         fi
     done
 
-    # If all runs are correct, return success
     if [ "$pass_count" -eq "$MAX_RUNS" ]; then
-        return 0  # All runs passed
+        return 0
     else
-        return 1  # At least one run failed
+        return 1
     fi
 }
 
-for file in "$TEST_DIR"/*; do
-    echo "Testing file: $file" | tee -a "$RESULT_FILE"
+for number in "${TEST_LIST[@]}"; do
+    testfile="$TEST_DIR/testcase${number}_in.txt"
+    answerfile="$TEST_DIR/testcase${number}_out.txt"
+    echo "Testing file: $testfile" | tee -a "$RESULT_FILE" 
 
     # Iterate through different reps
     for reps in "${REPS_LIST[@]}"; do
         echo "Testing with reps: $reps" | tee -a "$RESULT_FILE"
 
         # Validate correctness for this combination
-        validate_correctness "$file" "$reps"
+        validate_correctness "$testfile" "$answerfile" "$reps"
         if [ $? -eq 0 ]; then
             echo "File: $file, Reps: $reps -> All correct" | tee -a "$RESULT_FILE"
             echo "Desired reps for $file: $reps" | tee -a "$RESULT_FILE"
-            break  # No need to test higher reps
+            break
         else
             echo "File: $file, Reps: $reps -> Failed" | tee -a "$RESULT_FILE"
         fi
