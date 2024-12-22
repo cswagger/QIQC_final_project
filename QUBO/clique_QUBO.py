@@ -40,7 +40,7 @@ G = nx.relabel_nodes(G, {old_label: new_label for new_label, old_label in enumer
 # Convert the graph into a Clique problem
 clique = Clique(graph=G)
 qubo = clique.to_quadratic_program()
-print(qubo)
+# print(qubo)
 
 # Solve using QAOA
 quantum_instance = Aer.get_backend('aer_simulator')
@@ -50,5 +50,10 @@ result = optimizer.solve(qubo)
 found_clique = set(clique.interpret(result))
 
 expected_clique = read_answer(answer_file)
+is_correct = found_clique in expected_clique
 print("Found Clique Nodes:", " ".join(map(str, found_clique)))
-print("Result:", "Correct" if found_clique in expected_clique else "Incorrect")
+if is_correct:
+    print("Result: Correct")
+else:
+    print("Result: Incorrect")
+    exit(1)
