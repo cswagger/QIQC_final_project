@@ -27,25 +27,28 @@ def read_answer(answer_file):
     return largest_cliques
 
 
-if len(argv) != 3:
-    print("Usage: python3 clique_QUBO.py [input_file] [answer_file]")
+if len(argv) != 4:
+    print("Usage: python3 clique_QUBO.py [input_file] [answer_file] [reps]")
     exit(1)
 input_file = argv[1]
 answer_file = argv[2]
+reps = int(argv[3])
 
 G = read_input(input_file)
+G = nx.relabel_nodes(G, {old_label: new_label for new_label, old_label in enumerate(G.nodes())})
 
 # Convert the graph into a Clique problem
 clique = Clique(graph=G)
 qubo = clique.to_quadratic_program()
+print(qubo)
 
 # Solve using QAOA
 quantum_instance = Aer.get_backend('aer_simulator')
-qaoa = QAOA(reps=20, quantum_instance=quantum_instance)
+qaoa = QAOA(reps=reps, quantum_instance=quantum_instance)
 optimizer = MinimumEigenOptimizer(qaoa)
 result = optimizer.solve(qubo)
 found_clique = set(clique.interpret(result))
 
 expected_clique = read_answer(answer_file)
 print("Found Clique Nodes:", " ".join(map(str, found_clique)))
-print("Result:", "Correct" if ound_clique in expected_clique else "Incorrect")
+print("Result:", "Correct" if found_clique in expected_clique else "Incorrect")
