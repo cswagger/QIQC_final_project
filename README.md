@@ -36,5 +36,5 @@ This indicates that there are three maximal cliques: [0, 1, 2], \[1, 4], and [3,
 
 - **normal_testcases**: Contains test cases with $V$ ranging from $4$ to $35$.
 
-- **all_connected_testcases**: Contains test cases with $V$ ranging from $4$ to $35$, where all vertices are mutually connected.
+- **all_connected_testcases**: Contains test cases with $V$ ranging from $4$ to $35$, where all vertices are adjacent to each others.
 
