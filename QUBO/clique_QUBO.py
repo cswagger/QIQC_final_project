@@ -3,23 +3,49 @@ from qiskit_optimization.applications import Clique
 from qiskit_optimization.algorithms import MinimumEigenOptimizer
 from qiskit.algorithms import QAOA
 from qiskit import Aer
+from sys import argv
 
-# 創建帶權圖
-G = nx.Graph()
-G.add_weighted_edges_from([
-    (0, 1, 3), (1, 2, 5), (2, 3, 2), (0, 3, 4), (1, 3, 1)
-])
+def read_input(input_file):
+    with open(input_file, 'r') as file:
+        lines = file.readlines()
+        n, m = map(int, lines[0].split())
+    
+    G = nx.Graph()
+    for i in range(1, m + 1):
+        u, v = map(int, lines[i].split())
+        G.add_edge(u, v)
+    
+    return G
 
-# 定義加權團問題
+def read_answer(answer_file):
+    with open(answer_file, 'r') as file:
+        lines = file.readlines()
+    n = int(lines[0])
+    cliques = [set(map(int, lines[i].split())) for i in range(1, n + 1)]
+    max_size = max(len(clique) for clique in cliques)
+    largest_cliques = [clique for clique in cliques if len(clique) == max_size]
+    return largest_cliques
+
+
+if len(argv) != 3:
+    print("Usage: python3 clique_QUBO.py [input_file] [answer_file]")
+    exit(1)
+input_file = argv[1]
+answer_file = argv[2]
+
+G = read_input(input_file)
+
+# Convert the graph into a Clique problem
 clique = Clique(graph=G)
-qubo = clique.to_qubo()
+qubo = clique.to_quadratic_program()
 
-# 使用 QAOA 求解
+# Solve using QAOA
 quantum_instance = Aer.get_backend('aer_simulator')
-qaoa = QAOA(quantum_instance=quantum_instance)
+qaoa = QAOA(reps=20, quantum_instance=quantum_instance)
 optimizer = MinimumEigenOptimizer(qaoa)
 result = optimizer.solve(qubo)
+found_clique = set(clique.interpret(result))
 
-# 輸出結果
-print("找到的團：", result.x)
-print("目標值（總權重）：", result.fval)
+expected_clique = read_answer(answer_file)
+print("Found Clique Nodes:", " ".join(map(str, found_clique)))
+print("Result:", "Correct" if ound_clique in expected_clique else "Incorrect")
