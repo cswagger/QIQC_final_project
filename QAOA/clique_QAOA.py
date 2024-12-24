@@ -42,12 +42,12 @@ G = nx.relabel_nodes(G, {old_label: new_label for new_label, old_label in enumer
 # Convert the graph into a Clique problem
 clique = Clique(graph=G)
 qp = clique.to_quadratic_program()
-print(qp)
+# print(qp)
 qubo = QuadraticProgramToQubo().convert(qp)
-print(qubo)
-ising_model, offset = qubo.to_ising()
-print(ising_model)
-print("Offset:", offset)
+# print(qubo)
+# ising_model, offset = qubo.to_ising()
+# print(ising_model)
+# print("Offset:", offset)
 
 # Solve using QAOA
 quantum_instance = Aer.get_backend('aer_simulator')

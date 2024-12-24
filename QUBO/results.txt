@@ -1,2 +1,0 @@
-Testing file: ../testcases/normal_testcases/testcase0_in.txt
-Testing with reps: 1

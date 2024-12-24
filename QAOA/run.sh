@@ -2,8 +2,26 @@
 
 TEST_DIR="../testcases/maximal_normal_testcases"
 PYTHON_SCRIPT="clique_QAOA.py"
-REPS_LIST=(28 32 26 40 44 48)
-TEST_LIST=(32 36 40)
+REPS_LIST=(1 2 4 6 8 10 12 16 20 24 28 32 26 40 44 48)
+TEST_LIST=(3 7 11 17 21 26 31 36 41 30 31 32 33 34)
+
+# n, m
+# testcase3: 4, 5
+# testcase7: 5, 8
+# testcase11: 6, 7
+# testcase17: 7, 8
+# testcase21: 8, 8
+# testcase26: 9, 8
+# testcase31: 10, 18
+# testcase36: 11, 16
+# testcase41: 12, 20
+
+# testcase30: 10, 5
+# testcase31: 10, 18
+# testcase32: 10, 26
+# testcase33: 10, 35
+# testcase34: 10, 39
+
 MAX_RUNS=3
 
 RESULT_FILE="results.txt" > "$RESULT_FILE"
