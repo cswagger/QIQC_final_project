@@ -2,7 +2,7 @@
 
 TEST_DIR="../testcases/maximal_normal_testcases"
 PYTHON_SCRIPT="clique_QAOA.py"
-REPS_LIST=(1 2 4 6 8 10 12 16 20 24 28 32 26 40 44 48)
+REPS_LIST=(1 2 4 6 8 10 12 16 20 24 28 32 36 40)
 TEST_LIST=(3 7 11 17 21 26 31 36 41 30 31 32 33 34)
 
 # n, m
