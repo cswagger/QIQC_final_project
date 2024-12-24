@@ -1,0 +1,4 @@
+qiskit==0.28.0
+networkx==2.5.1
+qiskit-optimization==0.2.3
+numpy==1.24.3
