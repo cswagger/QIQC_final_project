@@ -1,3 +1,61 @@
+# Solving CLIQUE using Quantum Computing
+
+## QAOA Setup and Execution Guide
+
+### Step 1: Navigate to the `QAOA/` Folder
+Open a terminal and move to the `QAOA/` directory where the project files are located:
+```bash
+cd QAOA/
+```
+
+### Step 2: Create a Virtual Environment
+Ensure you have `python3.9` installed. Create an isolated Python environment to manage dependencies:
+```bash
+python3.9 -m venv .venv
+```
+
+### Step 3: Activate the Virtual Environment
+Activate the environment to ensure all installations and executions are contained within it. For example, in **Linux/macOS**:
+
+```bash
+source .venv/bin/activate
+```
+
+### Step 4: Install Required Packages
+Use `pip` to install all necessary dependencies from the `requirements.txt` file:
+```bash
+pip install -r requirements.txt
+```
+
+### Step 5: Run Test Cases and Validate Results
+Use the `clique_QAOA.py` script to run test cases. Replace the placeholders `[inputfile]`, `[answerfile]`, and `[reps]` with your input data:
+
+- **[inputfile]**: The path to the file containing the graph data.
+- **[answerfile]**: The file where the computed results will be validated against.
+- **[reps]**: Number of repetitions (layers \( p \)) for QAOA.
+
+### Step 6: Conducting Experiments
+
+A script `run.sh` is provided to conduct experiments.
+
+Make sure that you have granted execution permission before executing
+```bash
+chmod +x run.sh
+```
+
+You could run it with
+```bash
+./run.sh
+```
+
+### Step 7: Deactivating the Virtual Environment
+Once finished, deactivate the virtual environment to return to your default Python environment:
+```bash
+deactivate
+```
+
+---
+
 ## Testcases
 
 ### Input Format
